@@ -37,4 +37,13 @@ class TestSimulation < MiniTest::Spec
     @s.particles[0].distance_from(@s.particles[1]).must_be :>,1
   end
 
+  def test_particles_keep_going
+    @s.add_particle Particle.new 1, 0
+    @s.add_particle Particle.new 0, 0
+    @s.step
+    @s.step
+    @s.step
+    #p @s.particles
+  end
+
 end

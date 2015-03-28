@@ -1,3 +1,5 @@
+require './lib/particles'
+
 class Simulation
   attr_reader :particles
   def initialize radius
@@ -12,7 +14,7 @@ class Simulation
   def step
     # Accumulate forces
     @particles.product(@particles).each do |p1, p2|
-      repel p1, p2 unless p1 == p2
+      repel p1, p2 #unless p1 == p2
     end
 
     # Apply forces
@@ -20,6 +22,10 @@ class Simulation
       keep_inside_circle particle
       particle.step
     end
+  end
+
+  def frictional_loss particle
+    particle.velocity *= 0.01
   end
 
   # TODO: faster-moving particles stop farther outside the circle
@@ -31,8 +37,9 @@ class Simulation
   end
 
   def repulsive_force p1, p2
-    x = (p1.distance_from p2).abs * @radius
-    1 - (x**2*(3-2*x))
+    0.1
+    #x = (p1.distance_from p2).abs * @radius
+    #1 - (x**2.0*(3.0-2.0*x))
   end
 
   def repel p1, p2

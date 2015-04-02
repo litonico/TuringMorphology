@@ -7,5 +7,5 @@ Rake::TestTask.new do |t|
 end
 
 task :default do
-  `rsdl ./lib/draw_ryan.rb`
+  `rsdl ./lib/draw.rb`
 end

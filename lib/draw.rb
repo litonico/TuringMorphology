@@ -12,7 +12,7 @@ class SimulationWindow < Thingy
   end
 
   def update dt
-    if dt%5 == 0
+    if dt%10 == 0
       simulation.add_particle Particle.new((rand-0.5)*0.01, (rand-0.5)*0.01)
     end
     simulation.step
@@ -21,7 +21,7 @@ class SimulationWindow < Thingy
   def draw dt
     blank
     simulation.particles.each do |particle|
-      pos = particle.position.scale(100) + Vec2.new(WINSIZE/2, WINSIZE/2)
+      pos = particle.position.scale(50) + Vec2.new(WINSIZE/2, WINSIZE/2)
       screen.draw_circle pos.x, pos.y, 5, color[:white], true, true
     end
   end

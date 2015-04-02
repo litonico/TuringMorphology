@@ -1,5 +1,10 @@
 require './lib/particles'
 
+RADIAL_SPEED = 1
+REPULSION_DISTANCE = 1
+REPULSION_FORCE = 1
+FRICTION = 0.8 # between 0 and 1-- 1 is slippery, 0 is no motion
+
 class Simulation
   attr_reader :particles
   def initialize radius
@@ -34,11 +39,11 @@ class Simulation
 
   def repel_from_center p
     dir = (p.position - Vec2.new(0, 0) ).normalize
-    p.velocity += dir.scale 0.001
+    p.velocity += dir.scale 0.001 * RADIAL_SPEED
   end
 
   def frictional_loss p
-    p.velocity = p.velocity.scale 0.6
+    p.velocity = p.velocity.scale FRICTION
   end
 
   def keep_inside_circle particle
@@ -48,7 +53,7 @@ class Simulation
   end
 
   def repulsive_force p1, p2
-    x = (p1.distance_from p2).abs / @radius
+    x = (p1.distance_from p2).abs / REPULSION_DISTANCE
     if x > 1
       y = 0
     elsif x < 0
@@ -56,7 +61,7 @@ class Simulation
     else
       y = 1 - (x**2.0*(3.0-2.0*x))
     end
-    y * 0.01
+    y * 0.01 * REPULSION_FORCE
   end
 
   def repel p1, p2

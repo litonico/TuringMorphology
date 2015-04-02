@@ -41,9 +41,16 @@ class TestSimulation < MiniTest::Spec
     @s.add_particle Particle.new 1, 0
     @s.add_particle Particle.new 0, 0
     @s.step
+    @s.particles[0].position.must_equal Vec2.new 1.1, 0
+    @s.particles[1].position.must_equal Vec2.new (-0.1), 0
     @s.step
+    @s.particles[0].position.must_equal Vec2.new 1.3, 0
+  end
+
+  def test_particles_slow_down
+    @s.add_particle Particle.new 1, 0
+    @s.add_particle Particle.new 0, 0
     @s.step
-    #p @s.particles
   end
 
 end
